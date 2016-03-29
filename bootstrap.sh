@@ -11,7 +11,7 @@ cd spec/dummy
 bundle exec rake db:drop db:create db:migrate
 bundle exec rake db:seed
 
-# bundle exec rake spree_sample:load
+bundle exec rake spree_sample:load
 
 echo 'Done!'
 
