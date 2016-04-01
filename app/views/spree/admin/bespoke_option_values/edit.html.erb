@@ -1,0 +1,32 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Bespoke Options' } %>
+
+<div class="well">
+  <fieldset>
+    <legend>Edit Bespoke Option Value</legend>
+
+    <%= form_for @bespoke_option_value, url: admin_product_bespoke_option_type_bespoke_option_value_path(@product, @bespoke_option_type, @bespoke_option_value) do |f| %>
+      <%= f.field_container :name, :class => ['form-group'] do %>
+        <%= f.label :name, 'Name *' %>
+        <%= f.text_field :name, :class => 'form-control' %>
+      <% end %>
+      <%= f.field_container :price_modifier, :class => ['form-group'] do %>
+        <%= f.label :price_modifier, 'Price Modidifer' %>
+        <%= f.number_field :price_modifier, :class => 'form-control' %>
+      <% end %>
+      <%= f.field_container :description, :class => ['form-group'] do %>
+        <%= f.label :description, 'Description' %>
+        <%= f.text_area :description, :class => 'form-control' %>
+      <% end %>
+      <%= f.field_container :image, :class => ['form-group'] do %>
+        <%= f.label :image, 'Image' %>
+        <%= f.file_field :image, :class => 'form-control' %>
+        <% if f.object.image.present? %>
+          <p style="margin-top: 10px;"><%= image_tag f.object.image.url, width: 50, class: 'thumbnail' %></p>
+        <% end %>
+      <% end %>
+      <div class="form-actions" data-hook="buttons">
+        <%= button Spree.t('actions.update'), 'ok', 'submit', {class: 'btn-success'} %>
+      </div>
+    <% end %>
+  </fieldset>
+</div>

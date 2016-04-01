@@ -1,0 +1,5 @@
+<% if @product.bespoke %>
+  <%= content_tag :li, class: ('active' if current == 'Bespoke Options') do %>
+    <%= link_to_with_icon 'wrench', 'Bespoke Options', bespoke_options_admin_product_path(@product) %>
+  <% end %>
+<% end %>

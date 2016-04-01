@@ -11,5 +11,7 @@ class Spree::Bespoke::OptionValue < ActiveRecord::Base
                     path: ':rails_root/public/spree/bespoke/option_type/:option_type_id/option_value/:id/:basename.:extension'
 
   validates_attachment :image, :content_type => { :content_type => %w(image/jpeg image/jpg image/png image/gif) }
+
+  validates :name, presence: true
   
 end

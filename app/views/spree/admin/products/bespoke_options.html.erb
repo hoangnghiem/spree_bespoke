@@ -1,0 +1,44 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Bespoke Options' } %>
+
+<div class="well">
+  <fieldset>
+    <legend>Add Bespoke Option Type</legend>
+
+    <%= form_for :option_type, url: admin_product_bespoke_option_types_path(@product) do |f| %>
+      <%= f.field_container :name, :class => ['form-group'] do %>
+        <%= f.label :name, 'Name *' %>
+        <%= f.text_field :name, :class => 'form-control' %>
+      <% end %>
+      <div class="form-actions" data-hook="buttons">
+        <%= button Spree.t('actions.create'), 'ok', 'submit', {class: 'btn-success'} %>
+      </div>
+    <% end %>
+  </fieldset>
+</div>
+
+  
+<table class="table sortable" id='listing_bespoke_option_types' data-sortable-link="<%#= update_positions_admin_cms_pages_url %>" data-hook>
+  <thead>
+  <tr data-hook="bespoke_options_header">
+    <th colspan="2">Name</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @bespoke_option_types.each do |bot|
+    @edit_url = edit_admin_product_bespoke_option_type_path(@product, bot)
+    @delete_url = admin_product_bespoke_option_type_path(@product, bot) 
+  %>
+    <tr id="<%= spree_dom_id bot %>" data-hook="tax_row">
+      <td class="move-handle text-center">
+        <span class="icon icon-move handle"></span>
+      </td>
+      <td><%= link_to bot.name, @edit_url %></td>
+      <td class="actions actions-2 text-right">
+        <%= link_to_edit(bot, url: @edit_url, no_text: true) if can? :edit, bot %>
+        <%= link_to_delete(bot, url: @delete_url, no_text: true) if can? :delete, bot %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
