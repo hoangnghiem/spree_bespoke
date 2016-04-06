@@ -27,9 +27,15 @@ module Spree
       end.compact
 
       offset_price = 0.0
-      bespoke_option_values.each do |bov|
+      bespoke_option_values.select {|bo| bo.price_modifier_type == 'flat_rate'}.each do |bov|
         line_item.bespoke_line_items.create!(option_value: bov, price_modifier: bov.price_modifier)
         offset_price += bov.price_modifier
+      end
+
+      bespoke_option_values.select {|bo| bo.price_modifier_type == 'percentage'}.each do |bov|
+        amount = ((bov.price_modifier / 100.0) * offset_price).round(2)
+        line_item.bespoke_line_items.create!(option_value: bov, price_modifier: bov.price_modifier)
+        offset_price += amount
       end
 
       if currency

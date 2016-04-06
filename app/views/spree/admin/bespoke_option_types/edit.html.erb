@@ -42,7 +42,13 @@
         <%= image_tag bov.image.url, width: 50 if bov.image.present? %>
       </td>
       <td><%= link_to bov.name, @edit_url %></td>
-      <td><%= Spree::Money.new(bov.price_modifier).to_html %></td>
+      <td>
+        <% if bov.price_modifier_type == 'flat_rate' %>
+          <%= Spree::Money.new(bov.price_modifier).to_html %>
+        <% else %>
+          <%= number_to_percentage bov.price_modifier, precision: 2 %>
+        <% end %>
+      </td>
       <td class="actions actions-2 text-right">
         <%= link_to_edit(bov, url: @edit_url, no_text: true) if can? :edit, bov %>
         <%= link_to_delete(bov, url: @delete_url, no_text: true) if can? :delete, bov %>

@@ -13,6 +13,10 @@
         <%= f.label :price_modifier, 'Price Modidifer' %>
         <%= f.number_field :price_modifier, :class => 'form-control' %>
       <% end %>
+      <%= f.field_container :price_modifier_type, :class => ['form-group'] do %>
+        <%= f.label :price_modifier_type, 'Price Modidifer Type' %>
+        <%= f.select :price_modifier_type, [['$', 'flat_rate'], ['%', 'percentage']], :class => 'form-control' %>
+      <% end %>
       <%= f.field_container :description, :class => ['form-group'] do %>
         <%= f.label :description, 'Description' %>
         <%= f.text_area :description, :class => 'form-control' %>
