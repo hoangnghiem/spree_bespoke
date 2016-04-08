@@ -35,6 +35,18 @@ class Spree::Admin::BespokeOptionTypesController < Spree::Admin::BaseController
     end
   end
 
+  def update_positions
+    ActiveRecord::Base.transaction do
+      params[:positions].each do |id, index|
+        @product.bespoke_option_types.find(id).set_list_position(index)
+      end
+    end
+
+    respond_to do |format|
+      format.js { render text: 'Ok' }
+    end
+  end
+
   private
 
   def load_product

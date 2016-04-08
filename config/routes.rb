@@ -4,7 +4,10 @@ Spree::Core::Engine.routes.draw do
     resources :products, only: [] do
       get :bespoke_options, on: :member
       resources :bespoke_option_types do
-        resources :bespoke_option_values
+        post :update_positions, on: :collection
+        resources :bespoke_option_values do
+          post :update_positions, on: :collection
+        end
       end
     end
   end
