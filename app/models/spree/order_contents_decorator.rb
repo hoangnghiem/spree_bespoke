@@ -20,13 +20,13 @@ module Spree
       line_item.save!
 
       # add bespoke options
+      offset_price = 0.0
 
       bespoke_option_value_ids = ( !!options[:bespoke_option_values] ? options[:bespoke_option_values] : [] )
       bespoke_option_values = bespoke_option_value_ids.map do |cid|
         Spree::Bespoke::OptionValue.find(cid) if cid.present?
       end.compact
 
-      offset_price = 0.0
       bespoke_option_values.select {|bo| bo.price_modifier_type == 'flat_rate'}.each do |bov|
         line_item.bespoke_line_items.create!(option_value: bov, price_modifier: bov.price_modifier)
         offset_price += bov.price_modifier
@@ -38,12 +38,7 @@ module Spree
         offset_price += amount
       end
 
-      if currency
-        line_item.currency = currency unless currency.nil?
-        line_item.price    = variant.price_in(currency).amount + offset_price
-      else
-        line_item.price    = variant.price + offset_price
-      end
+      line_item.price = (variant.price_in(currency).amount || variant.price) + offset_price
       line_item.save!
       line_item
     end
