@@ -43,10 +43,11 @@
       </td>
       <td><%= link_to bov.name, @edit_url %></td>
       <td>
+        <% bov_price = bov.price_in(Spree::Config['currency']) %>
         <% if bov.price_modifier_type == 'flat_rate' %>
-          <%= Spree::Money.new(bov.price_modifier).to_html %>
+          <%= bov_price.money.to_html %>
         <% else %>
-          <%= number_to_percentage bov.price_modifier, precision: 2 %>
+          <%= number_to_percentage bov_price.amount, precision: 2 %>
         <% end %>
       </td>
       <td class="actions actions-2 text-right">

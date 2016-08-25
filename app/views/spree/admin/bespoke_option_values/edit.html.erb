@@ -9,9 +9,19 @@
         <%= f.label :name, 'Name *' %>
         <%= f.text_field :name, :class => 'form-control' %>
       <% end %>
-      <%= f.field_container :price_modifier, :class => ['form-group'] do %>
-        <%= f.label :price_modifier, 'Price Modidifer' %>
-        <%= f.number_field :price_modifier, :class => 'form-control' %>
+      <%= f.field_container :prices, :class => ['form-group'] do %>
+        <%= f.label :prices, 'Price Modidifer' %>
+        <div class="row">
+          <%= f.fields_for :prices do |ff| %>
+            <div class="col-md-3">
+              <div class="input-group">
+                <span class="input-group-addon"><%= ff.object.currency %></span>
+                <%= ff.hidden_field :currency %>
+                <%= ff.number_field :amount, :class => 'form-control' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
       <% end %>
       <%= f.field_container :price_modifier_type, :class => ['form-group'] do %>
         <%= f.label :price_modifier_type, 'Price Modidifer Type' %>

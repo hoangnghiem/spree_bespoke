@@ -18,6 +18,9 @@ class Spree::Admin::BespokeOptionValuesController < Spree::Admin::BaseController
 
   def edit
     @bespoke_option_value = @bespoke_option_type.option_values.find(params[:id])
+    supported_currencies.each do |money_currency|
+      @bespoke_option_value.prices.where(currency: money_currency.iso_code).first_or_initialize
+    end
   end
 
   def update
