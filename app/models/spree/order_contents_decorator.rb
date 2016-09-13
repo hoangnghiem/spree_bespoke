@@ -4,24 +4,14 @@ module Spree
     private
 
     def add_to_line_item(variant, quantity, options = {})
-      puts "======================================"
-      puts "add_to_line_item"
-      puts "options = #{options}"
-      puts "order.currency = #{order.currency}"
-      puts "currency = #{currency}"
-      puts "======================================"
-
       line_item = grab_line_item_by_variant(variant, false, options)
 
       if line_item
-        puts "cong don qty"
         line_item.quantity += quantity.to_i
         line_item.currency = currency unless currency.nil?
       else
         opts = { currency: order.currency }.merge ActionController::Parameters.new(options).
                                             permit(PermittedAttributes.line_item_attributes)
-        puts "tao moi line item"
-        puts opts
         line_item = order.line_items.new(quantity: quantity,
                                           variant: variant,
                                           options: opts)
